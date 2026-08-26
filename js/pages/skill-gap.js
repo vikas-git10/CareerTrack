@@ -4,7 +4,7 @@
 
 
 // -----------------------------------------
-// State
+// Load Data
 // -----------------------------------------
 
 let applications =
@@ -32,7 +32,7 @@ const skillGapResults =
 
 
 // -----------------------------------------
-// Populate Job Applications
+// Populate Job Dropdown
 // -----------------------------------------
 
 function populateJobSelect() {
@@ -57,7 +57,7 @@ function populateJobSelect() {
 
 
         option.textContent =
-            `${application.company} — ${application.position} (${application.requiredSkills?.length || 0} skills)`;
+            `${application.company} — ${application.position}`;
 
 
         jobSelect.appendChild(option);
@@ -66,38 +66,6 @@ function populateJobSelect() {
 
 }
 
-// -----------------------------------------
-// Skill Level Mapping
-// -----------------------------------------
-
-const skillLevelValues = {
-
-    Beginner: 1,
-
-    Basic: 2,
-
-    Intermediate: 3,
-
-    Advanced: 4,
-
-    Expert: 5
-
-};
-
-// -----------------------------------------
-// Initial Setup
-// -----------------------------------------
-
-populateJobSelect();
-
-// -----------------------------------------
-// Analyze Button
-// -----------------------------------------
-
-analyzeBtn.addEventListener(
-    "click",
-    analyzeSkillGap
-);
 
 // -----------------------------------------
 // Analyze Skill Gap
@@ -111,7 +79,9 @@ function analyzeSkillGap() {
 
     if (!selectedApplicationId) {
 
-        alert("Please select a job application.");
+        alert(
+            "Please select a job application."
+        );
 
         return;
 
@@ -120,24 +90,35 @@ function analyzeSkillGap() {
 
     const application =
         applications.find(
-            app => app.id === selectedApplicationId
+            app =>
+                app.id ===
+                selectedApplicationId
         );
 
 
     if (!application) {
 
-        alert("Application not found.");
+        alert(
+            "Application not found."
+        );
 
         return;
 
     }
 
 
-    const requiredSkills =
-        application.requiredSkills || [];
+    // -----------------------------------------
+    // Use Skill Gap Service
+    // -----------------------------------------
+
+    const analysis =
+        analyzeApplicationSkills(
+            application,
+            skills
+        );
 
 
-    if (requiredSkills.length === 0) {
+    if (analysis.results.length === 0) {
 
         alert(
             "This application does not have any required skills."
@@ -148,147 +129,13 @@ function analyzeSkillGap() {
     }
 
 
-    // -----------------------------------------
-    // Compare skills
-    // -----------------------------------------
-
-    const results =
-    requiredSkills.map(requiredSkill => {
-
-        // -----------------------------------------
-        // Support both old and new formats
-        // -----------------------------------------
-
-        const requiredSkillName =
-            typeof requiredSkill === "object"
-                ? requiredSkill.name
-                : requiredSkill;
-
-
-        const requiredLevel =
-            typeof requiredSkill === "object"
-                ? requiredSkill.level
-                : getRequiredLevel(requiredSkill);
-
-
-        // -----------------------------------------
-        // Find user's skill
-        // -----------------------------------------
-
-        const userSkill =
-            skills.find(
-                skill =>
-                    skill.name.toLowerCase() ===
-                    requiredSkillName.toLowerCase()
-            );
-
-
-        // -----------------------------------------
-        // Missing skill
-        // -----------------------------------------
-
-        if (!userSkill) {
-
-            return {
-
-                skill:
-                    requiredSkillName,
-
-                requiredLevel:
-                    requiredLevel,
-
-                currentLevel:
-                    "Missing",
-
-                status:
-                    "missing",
-
-                gap:
-                    null
-
-            };
-
-        }
-
-
-        // -----------------------------------------
-        // Compare proficiency
-        // -----------------------------------------
-
-        const currentValue =
-            skillLevelValues[
-                userSkill.currentLevel
-            ] || 0;
-
-
-        const requiredValue =
-            skillLevelValues[
-                requiredLevel
-            ] || 1;
-
-
-        const gap =
-            requiredValue - currentValue;
-
-
-        let status;
-
-
-        if (gap <= 0) {
-
-            status = "strong";
-
-        }
-        else {
-
-            status = "improve";
-
-        }
-
-
-        return {
-
-            skill:
-                requiredSkillName,
-
-            requiredLevel:
-                requiredLevel,
-
-            currentLevel:
-                userSkill.currentLevel,
-
-            status:
-                status,
-
-            gap:
-                gap
-
-        };
-
-    });
-
-
     renderAnalysis(
         application,
-        results
+        analysis
     );
 
 }
 
-// -----------------------------------------
-// Get Required Skill Level
-// -----------------------------------------
-
-function getRequiredLevel(skillName) {
-
-    // Temporary default:
-    // Every required skill is considered
-    // Intermediate until we add required
-    // proficiency to the application form.
-
-    return "Intermediate";
-
-}
 
 // -----------------------------------------
 // Render Analysis
@@ -296,20 +143,28 @@ function getRequiredLevel(skillName) {
 
 function renderAnalysis(
     application,
-    results
+    analysis
 ) {
 
-    // -----------------------------------------
-    // Show results
-    // -----------------------------------------
-
-    skillGapEmpty.classList.add("d-none");
-
-    skillGapResults.classList.remove("d-none");
+    const results =
+        analysis.results;
 
 
     // -----------------------------------------
-    // Job information
+    // Show Results
+    // -----------------------------------------
+
+    skillGapEmpty.classList.add(
+        "d-none"
+    );
+
+    skillGapResults.classList.remove(
+        "d-none"
+    );
+
+
+    // -----------------------------------------
+    // Job Information
     // -----------------------------------------
 
     document.getElementById(
@@ -327,139 +182,60 @@ function renderAnalysis(
     document.getElementById(
         "resultLocation"
     ).textContent =
-        application.location || "Location not specified";
+        application.location ||
+        "Location not specified";
 
 
     // -----------------------------------------
-    // Count results
-    // -----------------------------------------
-
-    const strongSkills =
-        results.filter(
-            result =>
-                result.status === "strong"
-        );
-
-
-    const improveSkills =
-        results.filter(
-            result =>
-                result.status === "improve"
-        );
-
-
-    const missingSkills =
-        results.filter(
-            result =>
-                result.status === "missing"
-        );
-
-
-    // -----------------------------------------
-    // Update summary
+    // Summary Counts
     // -----------------------------------------
 
     document.getElementById(
         "strongSkillsCount"
     ).textContent =
-        strongSkills.length;
+        analysis.strongCount;
 
 
     document.getElementById(
         "improveSkillsCount"
     ).textContent =
-        improveSkills.length;
+        analysis.improveCount;
 
 
     document.getElementById(
         "missingSkillsCount"
     ).textContent =
-        missingSkills.length;
+        analysis.missingCount;
 
 
     // -----------------------------------------
-    // Match score
+    // Match Score
     // -----------------------------------------
-
-    const matchScore =
-        calculateMatchScore(results);
-
 
     document.getElementById(
         "matchScore"
     ).textContent =
-        `${matchScore}%`;
+        `${analysis.matchScore}%`;
 
 
     // -----------------------------------------
-    // Render comparison
+    // Render Skill Comparison
     // -----------------------------------------
 
-    renderSkillComparison(results);
-
-}
-
-// -----------------------------------------
-// Calculate Match Score
-// -----------------------------------------
-
-function calculateMatchScore(results) {
-
-    if (results.length === 0) {
-        return 0;
-    }
-
-
-    let totalScore = 0;
-
-
-    results.forEach(result => {
-
-        if (result.status === "missing") {
-
-            totalScore += 0;
-
-            return;
-
-        }
-
-
-        const currentValue =
-            skillLevelValues[
-                result.currentLevel
-            ] || 0;
-
-
-        const requiredValue =
-            skillLevelValues[
-                result.requiredLevel
-            ] || 1;
-
-
-        const skillScore =
-            Math.min(
-                currentValue / requiredValue,
-                1
-            );
-
-
-        totalScore +=
-            skillScore * 100;
-
-    });
-
-
-    return Math.round(
-        totalScore / results.length
+    renderSkillComparison(
+        results
     );
 
 }
+
 
 // -----------------------------------------
 // Render Skill Comparison
 // -----------------------------------------
 
-function renderSkillComparison(results) {
+function renderSkillComparison(
+    results
+) {
 
     const container =
         document.getElementById(
@@ -472,28 +248,30 @@ function renderSkillComparison(results) {
 
     results.forEach(result => {
 
-        const item =
-            document.createElement("div");
 
-
-        item.className =
-            "skill-comparison-item";
-
+        // -----------------------------------------
+        // Status
+        // -----------------------------------------
 
         let statusLabel;
 
         let statusClass;
 
 
-        if (result.status === "strong") {
+        if (
+            result.status === "strong"
+        ) {
 
-            statusLabel = "Strong";
+            statusLabel =
+                "Strong";
 
             statusClass =
                 "comparison-status-strong";
 
         }
-        else if (result.status === "improve") {
+        else if (
+            result.status === "improve"
+        ) {
 
             statusLabel =
                 "Needs Improvement";
@@ -504,7 +282,8 @@ function renderSkillComparison(results) {
         }
         else {
 
-            statusLabel = "Missing";
+            statusLabel =
+                "Missing";
 
             statusClass =
                 "comparison-status-missing";
@@ -512,14 +291,33 @@ function renderSkillComparison(results) {
         }
 
 
+        // -----------------------------------------
+        // Level Values
+        // -----------------------------------------
+
+        const levelValues = {
+
+            Beginner: 1,
+
+            Basic: 2,
+
+            Intermediate: 3,
+
+            Advanced: 4,
+
+            Expert: 5
+
+        };
+
+
         const currentValue =
-            skillLevelValues[
+            levelValues[
                 result.currentLevel
             ] || 0;
 
 
         const requiredValue =
-            skillLevelValues[
+            levelValues[
                 result.requiredLevel
             ] || 1;
 
@@ -530,9 +328,24 @@ function renderSkillComparison(results) {
                 ? 0
 
                 : Math.min(
-                    (currentValue / requiredValue) * 100,
+                    (
+                        currentValue /
+                        requiredValue
+                    ) * 100,
                     100
                 );
+
+
+        // -----------------------------------------
+        // Create Item
+        // -----------------------------------------
+
+        const item =
+            document.createElement("div");
+
+
+        item.className =
+            "skill-comparison-item";
 
 
         item.innerHTML = `
@@ -560,18 +373,24 @@ function renderSkillComparison(results) {
             <div class="comparison-levels">
 
                 <span>
+
                     Your Level:
+
                     <strong>
                         ${result.currentLevel}
                     </strong>
+
                 </span>
 
 
                 <span>
+
                     Required:
+
                     <strong>
                         ${result.requiredLevel}
                     </strong>
+
                 </span>
 
             </div>
@@ -589,8 +408,27 @@ function renderSkillComparison(results) {
         `;
 
 
-        container.appendChild(item);
+        container.appendChild(
+            item
+        );
 
     });
 
 }
+
+
+// -----------------------------------------
+// Initial Page Setup
+// -----------------------------------------
+
+populateJobSelect();
+
+
+// -----------------------------------------
+// Analyze Button
+// -----------------------------------------
+
+analyzeBtn.addEventListener(
+    "click",
+    analyzeSkillGap
+);
