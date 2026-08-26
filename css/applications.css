@@ -101,3 +101,75 @@
     }
 
 }
+
+/* =========================================
+   Application Details
+   ========================================= */
+
+.application-details-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.details-item {
+    padding: 14px;
+    background: #f8fafc;
+    border-radius: 8px;
+    height: 100%;
+}
+
+.details-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.details-value {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.details-section {
+    margin-top: 24px;
+}
+
+.details-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.details-notes {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    min-height: 60px;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background: #eef2ff;
+    color: var(--primary-dark);
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.job-url {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.job-url:hover {
+    text-decoration: underline;
+}

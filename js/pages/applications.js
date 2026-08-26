@@ -22,7 +22,14 @@ if (applications.length === 0) {
             jobType: "Full Time",
             appliedDate: "2026-08-25",
             priority: "High",
-            status: "Interview"
+            status: "Interview",
+
+             requiredSkills: [
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "Angular"
+            ]
         },
 
         {
@@ -114,6 +121,42 @@ const offerApplicationsCount =
     document.getElementById(
         "offerApplicationsCount"
     );
+
+const detailsCompany =
+    document.getElementById("detailsCompany");
+
+const detailsPosition =
+    document.getElementById("detailsPosition");
+
+const detailsStatus =
+    document.getElementById("detailsStatus");
+
+const detailsLocation =
+    document.getElementById("detailsLocation");
+
+const detailsWorkMode =
+    document.getElementById("detailsWorkMode");
+
+const detailsJobType =
+    document.getElementById("detailsJobType");
+
+const detailsAppliedDate =
+    document.getElementById("detailsAppliedDate");
+
+const detailsPriority =
+    document.getElementById("detailsPriority");
+
+const detailsJobUrl =
+    document.getElementById("detailsJobUrl");
+
+const detailsNotes =
+    document.getElementById("detailsNotes");
+
+const detailsSkills =
+    document.getElementById("detailsSkills");
+
+const detailsEditBtn =
+    document.getElementById("detailsEditBtn");
 
 
 // -----------------------------------------
@@ -453,6 +496,74 @@ function getStatusBadge(status) {
 
 }
 
+// -----------------------------------------
+// Get Status CSS Class
+// -----------------------------------------
+
+function getStatusClass(status) {
+
+    const statusClasses = {
+
+        Saved: "status-pending",
+
+        Applied: "status-applied",
+
+        Screening: "status-pending",
+
+        Interview: "status-interview",
+
+        "Technical Round":
+            "status-interview",
+
+        Offer: "status-offer",
+
+        Rejected: "status-pending",
+
+        Withdrawn: "status-pending"
+
+    };
+
+
+    return (
+        statusClasses[status]
+        ||
+        "status-pending"
+    );
+
+}
+
+// -----------------------------------------
+// Render Required Skills
+// -----------------------------------------
+
+function renderDetailsSkills(skills) {
+
+    if (!skills || skills.length === 0) {
+
+        detailsSkills.innerHTML = `
+
+            <span class="text-muted">
+                No skills added.
+            </span>
+
+        `;
+
+        return;
+
+    }
+
+
+    detailsSkills.innerHTML =
+        skills.map(skill => `
+
+            <span class="skill-tag">
+                ${skill}
+            </span>
+
+        `).join("");
+
+}
+
 
 // -----------------------------------------
 // Add / Edit Application
@@ -613,9 +724,148 @@ applicationForm.addEventListener("submit", function(event) {
 function viewApplication(id) {
 
     const application =
-        applications.find(app => app.id === id);
+        ApplicationService.getById(id);
 
-    console.log("Viewing application:", application);
+
+    if (!application) {
+
+        console.error(
+            "Application not found:",
+            id
+        );
+
+        return;
+
+    }
+
+
+    // -----------------------------------------
+    // Populate details
+    // -----------------------------------------
+
+    detailsCompany.textContent =
+        application.company;
+
+    detailsPosition.textContent =
+        application.position;
+
+    detailsLocation.textContent =
+        application.location || "Not specified";
+
+    detailsWorkMode.textContent =
+        application.workMode || "Not specified";
+
+    detailsJobType.textContent =
+        application.jobType || "Not specified";
+
+    detailsAppliedDate.textContent =
+        application.appliedDate
+            ? formatDate(application.appliedDate)
+            : "Not specified";
+
+
+    // -----------------------------------------
+    // Status
+    // -----------------------------------------
+
+    detailsStatus.textContent =
+        application.status;
+
+    detailsStatus.className =
+        `badge-status ${getStatusClass(application.status)}`;
+
+
+    // -----------------------------------------
+    // Priority
+    // -----------------------------------------
+
+    detailsPriority.innerHTML =
+        getPriorityBadge(application.priority);
+
+
+    // -----------------------------------------
+    // Job URL
+    // -----------------------------------------
+
+    if (application.jobUrl) {
+
+        detailsJobUrl.innerHTML = `
+
+            <a
+                href="${application.jobUrl}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="job-url"
+            >
+                Open Job Posting ↗
+            </a>
+
+        `;
+
+    } else {
+
+        detailsJobUrl.textContent =
+            "No URL provided";
+
+    }
+
+
+    // -----------------------------------------
+    // Notes
+    // -----------------------------------------
+
+    detailsNotes.textContent =
+        application.notes || "No notes added.";
+
+
+    // -----------------------------------------
+    // Skills
+    // -----------------------------------------
+
+    renderDetailsSkills(
+        application.requiredSkills || []
+    );
+
+
+    // -----------------------------------------
+    // Edit button
+    // -----------------------------------------
+
+    detailsEditBtn.onclick = function() {
+
+        const detailsModalElement =
+            document.getElementById(
+                "applicationDetailsModal"
+            );
+
+        const detailsModal =
+            bootstrap.Modal.getInstance(
+                detailsModalElement
+            );
+
+        detailsModal.hide();
+
+
+        editApplication(id);
+
+    };
+
+
+    // -----------------------------------------
+    // Show modal
+    // -----------------------------------------
+
+    const modalElement =
+        document.getElementById(
+            "applicationDetailsModal"
+        );
+
+    const modal =
+        bootstrap.Modal.getOrCreateInstance(
+            modalElement
+        );
+
+    modal.show();
 
 }
 

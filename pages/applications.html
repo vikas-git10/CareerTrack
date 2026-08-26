@@ -932,6 +932,277 @@
 
 </div>
 
+<!-- =========================
+     APPLICATION DETAILS MODAL
+     ========================= -->
+
+<div
+    class="modal fade"
+    id="applicationDetailsModal"
+    tabindex="-1"
+    aria-labelledby="applicationDetailsModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+
+            <!-- HEADER -->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        <h5
+                            class="modal-title mb-0"
+                            id="applicationDetailsModalLabel"
+                        >
+                            Application Details
+                        </h5>
+
+                        <span
+                            id="detailsStatus"
+                            class="badge-status status-applied"
+                        >
+                            Applied
+                        </span>
+
+                    </div>
+
+                    <small
+                        class="text-muted"
+                        id="detailsCompany"
+                    >
+                        Company
+                    </small>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- BODY -->
+
+            <div class="modal-body">
+
+
+                <!-- JOB TITLE -->
+
+                <div class="mb-4">
+
+                    <h3
+                        id="detailsPosition"
+                        class="application-details-title"
+                    >
+                        Frontend Developer
+                    </h3>
+
+                </div>
+
+
+                <!-- BASIC INFORMATION -->
+
+                <div class="row g-3 mb-4">
+
+
+                    <div class="col-md-6">
+
+                        <div class="details-item">
+
+                            <div class="details-label">
+                                Location
+                            </div>
+
+                            <div
+                                class="details-value"
+                                id="detailsLocation"
+                            >
+                                Bangalore
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="details-item">
+
+                            <div class="details-label">
+                                Work Mode
+                            </div>
+
+                            <div
+                                class="details-value"
+                                id="detailsWorkMode"
+                            >
+                                Hybrid
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="details-item">
+
+                            <div class="details-label">
+                                Job Type
+                            </div>
+
+                            <div
+                                class="details-value"
+                                id="detailsJobType"
+                            >
+                                Full Time
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="details-item">
+
+                            <div class="details-label">
+                                Application Date
+                            </div>
+
+                            <div
+                                class="details-value"
+                                id="detailsAppliedDate"
+                            >
+                                Aug 25, 2026
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="details-item">
+
+                            <div class="details-label">
+                                Priority
+                            </div>
+
+                            <div id="detailsPriority">
+                                High
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="details-item">
+
+                            <div class="details-label">
+                                Job Posting
+                            </div>
+
+                            <div id="detailsJobUrl">
+                                -
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- NOTES -->
+
+                <div class="details-section">
+
+                    <h6 class="details-section-title">
+                        Notes
+                    </h6>
+
+                    <div
+                        id="detailsNotes"
+                        class="details-notes"
+                    >
+                        No notes added.
+                    </div>
+
+                </div>
+
+
+                <!-- SKILLS -->
+
+                <div class="details-section">
+
+                    <h6 class="details-section-title">
+                        Required Skills
+                    </h6>
+
+                    <div
+                        id="detailsSkills"
+                        class="skill-tags"
+                    >
+                        <span class="text-muted">
+                            No skills added.
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-light"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="detailsEditBtn"
+                >
+                    Edit Application
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <!-- Bootstrap JS -->
 
 <script
