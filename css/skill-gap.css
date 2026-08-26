@@ -1,0 +1,158 @@
+/* =========================================
+   CareerTrack - Skill Gap
+   ========================================= */
+
+.skill-gap-header {
+    margin-bottom: 28px;
+}
+
+.skill-gap-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.skill-gap-header p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+
+/* ---------- Empty State ---------- */
+
+.skill-gap-empty-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+    opacity: 0.6;
+}
+
+
+/* ---------- Match Score ---------- */
+
+.match-score-container {
+    text-align: center;
+    min-width: 100px;
+}
+
+.match-score {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.match-score-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+
+/* ---------- Summary Cards ---------- */
+
+.gap-summary-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    background: #ffffff;
+}
+
+.gap-summary-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.gap-summary-value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+
+/* ---------- Skill Comparison ---------- */
+
+.skill-comparison-container {
+    display: grid;
+    gap: 12px;
+}
+
+.skill-comparison-item {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.skill-comparison-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.comparison-skill-name {
+    font-weight: 600;
+}
+
+.comparison-status {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.comparison-levels {
+    display: flex;
+    gap: 25px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.comparison-progress {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.comparison-progress-bar {
+    height: 100%;
+    border-radius: 10px;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+
+    .skill-gap-header h1 {
+        font-size: 23px;
+    }
+
+    .skill-comparison-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .comparison-levels {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+}
+
+/* =========================================
+   Skill Gap Statuses
+   ========================================= */
+
+.comparison-status-strong {
+    color: #198754;
+}
+
+.comparison-status-improve {
+    color: #fd7e14;
+}
+
+.comparison-status-missing {
+    color: #dc3545;
+}
+
+.comparison-progress-bar {
+    background: var(--primary-color);
+}
