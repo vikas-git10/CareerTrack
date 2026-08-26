@@ -68,6 +68,31 @@ const dashboardTopSkills =
         "dashboardTopSkills"
     );
 
+const dashboardAverageMatch =
+    document.getElementById(
+        "dashboardAverageMatch"
+    );
+
+const dashboardStrongMatches =
+    document.getElementById(
+        "dashboardStrongMatches"
+    );
+
+const dashboardImproveMatches =
+    document.getElementById(
+        "dashboardImproveMatches"
+    );
+
+const dashboardMissingMatches =
+    document.getElementById(
+        "dashboardMissingMatches"
+    );
+
+const dashboardSkillGaps =
+    document.getElementById(
+        "dashboardSkillGaps"
+    );
+
 
 // -----------------------------------------
 // Update Statistics
@@ -184,6 +209,293 @@ function updateSkillsOverview() {
     // -----------------------------------------
 
     renderDashboardTopSkills();
+
+}
+
+// -----------------------------------------
+// Update Career Readiness
+// -----------------------------------------
+
+function updateCareerReadiness() {
+
+    const applicationsWithSkills =
+        applications.filter(
+            application =>
+                application.requiredSkills &&
+                application.requiredSkills.length > 0
+        );
+
+
+    // -----------------------------------------
+    // No analyzable applications
+    // -----------------------------------------
+
+    if (
+        applicationsWithSkills.length === 0
+    ) {
+
+        dashboardAverageMatch.textContent =
+            "0%";
+
+        dashboardStrongMatches.textContent =
+            "0";
+
+        dashboardImproveMatches.textContent =
+            "0";
+
+        dashboardMissingMatches.textContent =
+            "0";
+
+        dashboardSkillGaps.innerHTML = `
+
+            <div class="text-muted py-3">
+
+                Add required skills to your
+                applications to see skill gaps.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // -----------------------------------------
+    // Analyze all applications
+    // -----------------------------------------
+
+    const analyses =
+        applicationsWithSkills.map(
+            application =>
+                analyzeApplicationSkills(
+                    application,
+                    skills
+                )
+        );
+
+
+    // -----------------------------------------
+    // Average match
+    // -----------------------------------------
+
+    const totalMatch =
+        analyses.reduce(
+            (total, analysis) =>
+                total +
+                analysis.matchScore,
+            0
+        );
+
+
+    const averageMatch =
+        Math.round(
+            totalMatch /
+            analyses.length
+        );
+
+
+    dashboardAverageMatch.textContent =
+        `${averageMatch}%`;
+
+
+    // -----------------------------------------
+    // Summary counts
+    // -----------------------------------------
+
+    const strongMatches =
+        analyses.reduce(
+            (total, analysis) =>
+                total +
+                analysis.strongCount,
+            0
+        );
+
+
+    const improveMatches =
+        analyses.reduce(
+            (total, analysis) =>
+                total +
+                analysis.improveCount,
+            0
+        );
+
+
+    const missingMatches =
+        analyses.reduce(
+            (total, analysis) =>
+                total +
+                analysis.missingCount,
+            0
+        );
+
+
+    dashboardStrongMatches.textContent =
+        strongMatches;
+
+
+    dashboardImproveMatches.textContent =
+        improveMatches;
+
+
+    dashboardMissingMatches.textContent =
+        missingMatches;
+
+
+    // -----------------------------------------
+    // Collect skill gaps
+    // -----------------------------------------
+
+    const skillGaps = [];
+
+
+    analyses.forEach(
+        analysis => {
+
+            analysis.results.forEach(
+                result => {
+
+                    if (
+                        result.status === "missing"
+                        ||
+                        result.status === "improve"
+                    ) {
+
+                        skillGaps.push(result);
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    renderDashboardSkillGaps(
+        skillGaps
+    );
+
+}
+
+// -----------------------------------------
+// Render Dashboard Skill Gaps
+// -----------------------------------------
+
+function renderDashboardSkillGaps(
+    skillGaps
+) {
+
+    dashboardSkillGaps.innerHTML = "";
+
+
+    if (skillGaps.length === 0) {
+
+        dashboardSkillGaps.innerHTML = `
+
+            <div class="text-muted py-3">
+
+                No skill gaps found.
+                Your current skills match
+                the tracked requirements.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // -----------------------------------------
+    // Remove duplicate skills
+    // -----------------------------------------
+
+    const uniqueGaps = [];
+
+
+    skillGaps.forEach(gap => {
+
+        const existing =
+            uniqueGaps.find(
+                item =>
+                    item.skill.toLowerCase() ===
+                    gap.skill.toLowerCase()
+            );
+
+
+        if (!existing) {
+
+            uniqueGaps.push(gap);
+
+        }
+
+    });
+
+
+    // -----------------------------------------
+    // Show top 5
+    // -----------------------------------------
+
+    uniqueGaps
+        .slice(0, 5)
+        .forEach(gap => {
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "dashboard-skill-gap";
+
+
+            const statusLabel =
+                gap.status === "missing"
+                    ? "Missing"
+                    : "Needs Improvement";
+
+
+            item.innerHTML = `
+
+                <div>
+
+                    <div class="dashboard-skill-gap-name">
+                        ${gap.skill}
+                    </div>
+
+                    <div class="dashboard-skill-gap-level">
+
+                        Your:
+                        ${gap.currentLevel}
+
+                        →
+
+                        Required:
+                        ${gap.requiredLevel}
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="dashboard-skill-gap-status"
+                >
+
+                    ${statusLabel}
+
+                </div>
+
+            `;
+
+
+            dashboardSkillGaps.appendChild(
+                item
+            );
+
+        });
 
 }
 
@@ -774,3 +1086,5 @@ function renderApplicationStatusChart() {
 renderApplicationStatusChart();
 
 updateSkillsOverview();
+
+updateCareerReadiness();

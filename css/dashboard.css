@@ -472,3 +472,82 @@
     font-size: 12px;
     font-weight: 600;
 }
+
+/* =========================================
+   Career Readiness
+   ========================================= */
+
+.readiness-score {
+    text-align: center;
+    padding: 10px 0 20px;
+}
+
+.readiness-score-value {
+    font-size: 42px;
+    font-weight: 700;
+}
+
+.readiness-score-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+
+.readiness-stats {
+    display: grid;
+    gap: 8px;
+}
+
+
+.readiness-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 12px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+
+    font-size: 13px;
+}
+
+
+.readiness-stat strong {
+    font-size: 15px;
+}
+
+
+.dashboard-skill-gaps {
+    display: grid;
+    gap: 10px;
+}
+
+
+.dashboard-skill-gap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+
+.dashboard-skill-gap-name {
+    font-weight: 600;
+}
+
+
+.dashboard-skill-gap-level {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+
+.dashboard-skill-gap-status {
+    font-size: 12px;
+    font-weight: 600;
+}

@@ -355,6 +355,8 @@
 
 <div class="row g-3 mb-4">
 
+    <!-- SKILLS OVERVIEW -->
+
     <div class="col-lg-4">
 
         <div class="dashboard-panel h-100">
@@ -363,11 +365,7 @@
                 Skills Overview
             </div>
 
-
             <div class="skill-overview-stats">
-
-
-                <!-- TOTAL -->
 
                 <div class="skill-overview-item">
 
@@ -385,8 +383,6 @@
                 </div>
 
 
-                <!-- ADVANCED -->
-
                 <div class="skill-overview-item">
 
                     <div class="skill-overview-label">
@@ -402,8 +398,6 @@
 
                 </div>
 
-
-                <!-- INTERMEDIATE -->
 
                 <div class="skill-overview-item">
 
@@ -421,8 +415,6 @@
                 </div>
 
 
-                <!-- BEGINNER -->
-
                 <div class="skill-overview-item">
 
                     <div class="skill-overview-label">
@@ -438,7 +430,6 @@
 
                 </div>
 
-
             </div>
 
         </div>
@@ -446,9 +437,7 @@
     </div>
 
 
-    <!-- =========================
-         TOP SKILLS
-         ========================= -->
+    <!-- TOP SKILLS -->
 
     <div class="col-lg-8">
 
@@ -469,13 +458,10 @@
 
             </div>
 
-
             <div
                 id="dashboardTopSkills"
                 class="dashboard-top-skills"
             >
-
-                <!-- Skills rendered by JavaScript -->
 
             </div>
 
@@ -484,6 +470,127 @@
     </div>
 
 </div>
+
+
+<!-- =========================
+     CAREER READINESS
+     ========================= -->
+
+<div class="row g-3 mb-4">
+
+    <!-- CAREER READINESS -->
+
+    <div class="col-lg-4">
+
+        <div class="dashboard-panel h-100">
+
+            <div class="panel-title mb-4">
+                Career Readiness
+            </div>
+
+
+            <div class="readiness-score">
+
+                <div
+                    class="readiness-score-value"
+                    id="dashboardAverageMatch"
+                >
+                    0%
+                </div>
+
+                <div class="readiness-score-label">
+                    Average Job Match
+                </div>
+
+            </div>
+
+
+            <div class="readiness-stats">
+
+                <div class="readiness-stat">
+
+                    <span>
+                        Strong Matches
+                    </span>
+
+                    <strong id="dashboardStrongMatches">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="readiness-stat">
+
+                    <span>
+                        Needs Improvement
+                    </span>
+
+                    <strong id="dashboardImproveMatches">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="readiness-stat">
+
+                    <span>
+                        Missing Skills
+                    </span>
+
+                    <strong id="dashboardMissingMatches">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOP SKILL GAPS -->
+
+    <div class="col-lg-8">
+
+        <div class="dashboard-panel h-100">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div class="panel-title mb-0">
+                    Top Skill Gaps
+                </div>
+
+                <a
+                    href="pages/skill-gap.html"
+                    class="btn btn-sm btn-outline-primary"
+                >
+                    Analyze
+                </a>
+
+            </div>
+
+
+            <div
+                id="dashboardSkillGaps"
+                class="dashboard-skill-gaps"
+            >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     RECENT APPLICATIONS
+     ========================= -->
 
 
         <!-- =========================
