@@ -1,0 +1,25 @@
+/* =========================================
+   CareerTrack - Global Styles
+   ========================================= */
+
+:root {
+    --primary-color: #4f46e5;
+    --primary-dark: #3730a3;
+    --background-color: #f8fafc;
+    --surface-color: #ffffff;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+}
