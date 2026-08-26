@@ -28,6 +28,20 @@ const skillSubmitBtn =
 const skillsContainer =
     document.getElementById("skillsContainer");
 
+const skillSearch =
+    document.getElementById("skillSearch");
+
+const skillCategoryFilter =
+    document.getElementById("skillCategoryFilter");
+
+const skillLevelFilter =
+    document.getElementById("skillLevelFilter");
+
+const clearSkillFiltersBtn =
+    document.getElementById(
+        "clearSkillFiltersBtn"
+    );
+
 const totalSkillsCount =
     document.getElementById("totalSkillsCount");
 
@@ -41,6 +55,7 @@ const beginnerSkillsCount =
     document.getElementById("beginnerSkillsCount");
 
 
+    
 // -----------------------------------------
 // Add Skill Form
 // -----------------------------------------
@@ -194,37 +209,97 @@ skillForm.addEventListener(
 // Render Skills
 // -----------------------------------------
 
+// -----------------------------------------
+// Render Skills
+// -----------------------------------------
+
 function renderSkills() {
+
+    const searchTerm =
+        skillSearch.value
+            .trim()
+            .toLowerCase();
+
+    const selectedCategory =
+        skillCategoryFilter.value;
+
+    const selectedLevel =
+        skillLevelFilter.value;
+
+
+    // -----------------------------------------
+    // Filter skills
+    // -----------------------------------------
+
+    const filteredSkills =
+        skills.filter(skill => {
+
+            const matchesSearch =
+                skill.name
+                    .toLowerCase()
+                    .includes(searchTerm);
+
+
+            const matchesCategory =
+                selectedCategory === ""
+                ||
+                skill.category === selectedCategory;
+
+
+            const matchesLevel =
+                selectedLevel === ""
+                ||
+                skill.currentLevel === selectedLevel;
+
+
+            return (
+                matchesSearch &&
+                matchesCategory &&
+                matchesLevel
+            );
+
+        });
+
+
+    // -----------------------------------------
+    // Clear container
+    // -----------------------------------------
 
     skillsContainer.innerHTML = "";
 
 
-    if (skills.length === 0) {
+    // -----------------------------------------
+    // Empty state
+    // -----------------------------------------
+
+    if (filteredSkills.length === 0) {
 
         skillsContainer.innerHTML = `
 
             <div class="text-center py-5 text-muted">
 
                 <div class="mb-2">
-                    No skills added yet.
+                    No skills found.
                 </div>
 
                 <small>
-                    Click "+ Add Skill" to create your skill profile.
+                    Try changing your search or filters.
                 </small>
 
             </div>
 
         `;
 
-        updateStatistics();
-
         return;
 
     }
 
 
-    skills.forEach(skill => {
+    // -----------------------------------------
+    // Render filtered skills
+    // -----------------------------------------
+
+    filteredSkills.forEach(skill => {
 
         const card =
             document.createElement("div");
@@ -251,9 +326,7 @@ function renderSkills() {
 
 
                 <div class="skill-level">
-
                     ${skill.currentLevel}
-
                 </div>
 
             </div>
@@ -307,6 +380,10 @@ function renderSkills() {
 
     });
 
+
+    // -----------------------------------------
+    // Update statistics
+    // -----------------------------------------
 
     updateStatistics();
 
@@ -468,6 +545,51 @@ function editSkill(id) {
 
 }
 
+// -----------------------------------------
+// Search Skills
+// -----------------------------------------
+
+skillSearch.addEventListener(
+    "input",
+    renderSkills
+);
+
+// -----------------------------------------
+// Category Filter
+// -----------------------------------------
+
+skillCategoryFilter.addEventListener(
+    "change",
+    renderSkills
+);
+
+// -----------------------------------------
+// Level Filter
+// -----------------------------------------
+
+skillLevelFilter.addEventListener(
+    "change",
+    renderSkills
+);
+
+// -----------------------------------------
+// Clear Skill Filters
+// -----------------------------------------
+
+clearSkillFiltersBtn.addEventListener(
+    "click",
+    function() {
+
+        skillSearch.value = "";
+
+        skillCategoryFilter.value = "";
+
+        skillLevelFilter.value = "";
+
+        renderSkills();
+
+    }
+);
 
 // -----------------------------------------
 // Initial Render
