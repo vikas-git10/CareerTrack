@@ -7,48 +7,65 @@
 // Application Data
 // -----------------------------------------
 
-let applications = [
-    {
-        id: 1,
-        company: "Google",
-        position: "Frontend Developer",
-        location: "Bangalore",
-        appliedDate: "2026-08-25",
-        priority: "High",
-        status: "Interview"
-    },
+let applications = ApplicationService.getAll();
 
-    {
-        id: 2,
-        company: "Microsoft",
-        position: "Web Developer",
-        location: "Hyderabad",
-        appliedDate: "2026-08-23",
-        priority: "Medium",
-        status: "Applied"
-    },
+if (applications.length === 0) {
 
-    {
-        id: 3,
-        company: "Infosys",
-        position: "Angular Developer",
-        location: "Pune",
-        appliedDate: "2026-08-20",
-        priority: "High",
-        status: "Pending"
-    },
+    applications = [
 
-    {
-        id: 4,
-        company: "TCS",
-        position: "Frontend Engineer",
-        location: "Mumbai",
-        appliedDate: "2026-08-18",
-        priority: "Low",
-        status: "Offer"
-    }
-];
+        {
+            id: Date.now() + 1,
+            company: "Google",
+            position: "Frontend Developer",
+            location: "Bangalore",
+            workMode: "Hybrid",
+            jobType: "Full Time",
+            appliedDate: "2026-08-25",
+            priority: "High",
+            status: "Interview"
+        },
 
+        {
+            id: Date.now() + 2,
+            company: "Microsoft",
+            position: "Web Developer",
+            location: "Hyderabad",
+            workMode: "Hybrid",
+            jobType: "Full Time",
+            appliedDate: "2026-08-23",
+            priority: "Medium",
+            status: "Applied"
+        },
+
+        {
+            id: Date.now() + 3,
+            company: "Infosys",
+            position: "Angular Developer",
+            location: "Pune",
+            workMode: "On-site",
+            jobType: "Full Time",
+            appliedDate: "2026-08-20",
+            priority: "High",
+            status: "Screening"
+        },
+
+        {
+            id: Date.now() + 4,
+            company: "TCS",
+            position: "Frontend Engineer",
+            location: "Mumbai",
+            workMode: "Hybrid",
+            jobType: "Full Time",
+            appliedDate: "2026-08-18",
+            priority: "Low",
+            status: "Offer"
+        }
+
+    ];
+
+    ApplicationService.saveAll(applications);
+
+}
 
 // -----------------------------------------
 // DOM Elements
@@ -204,6 +221,8 @@ applicationForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
 
+    // Create new application object
+
     const newApplication = {
 
         id: Date.now(),
@@ -241,14 +260,38 @@ applicationForm.addEventListener("submit", function(event) {
     };
 
 
-    applications.push(newApplication);
+    // -----------------------------------------
+    // Save to LocalStorage
+    // -----------------------------------------
 
+    ApplicationService.add(newApplication);
+
+
+    // -----------------------------------------
+    // Reload applications from LocalStorage
+    // -----------------------------------------
+
+    applications =
+        ApplicationService.getAll();
+
+
+    // -----------------------------------------
+    // Update table
+    // -----------------------------------------
 
     renderApplications();
 
 
+    // -----------------------------------------
+    // Reset form
+    // -----------------------------------------
+
     applicationForm.reset();
 
+
+    // -----------------------------------------
+    // Close modal
+    // -----------------------------------------
 
     const modalElement =
         document.getElementById("applicationModal");
