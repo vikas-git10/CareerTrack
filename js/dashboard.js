@@ -457,9 +457,134 @@ function renderApplicationChart() {
 
 }
 
-
 // -----------------------------------------
 // Render Chart
 // -----------------------------------------
 
 renderApplicationChart();
+
+// -----------------------------------------
+// Application Status Chart
+// -----------------------------------------
+
+function renderApplicationStatusChart() {
+
+    const canvas =
+        document.getElementById(
+            "applicationStatusChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    // -----------------------------------------
+    // Count application statuses
+    // -----------------------------------------
+
+    const statusCounts = {
+
+        Applied: 0,
+
+        Pending: 0,
+
+        Interview: 0,
+
+        "Technical Round": 0,
+
+        Offer: 0,
+
+        Rejected: 0
+
+    };
+
+
+    applications.forEach(
+        application => {
+
+            const status =
+                application.status;
+
+
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    statusCounts,
+                    status
+                )
+            ) {
+
+                statusCounts[status]++;
+
+            }
+
+        }
+    );
+
+
+    // -----------------------------------------
+    // Create chart
+    // -----------------------------------------
+
+    new Chart(
+        canvas,
+        {
+
+            type: "doughnut",
+
+            data: {
+
+                labels:
+                    Object.keys(
+                        statusCounts
+                    ),
+
+                datasets: [
+
+                    {
+
+                        data:
+                            Object.values(
+                                statusCounts
+                            ),
+
+                        borderWidth: 0
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: "65%",
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// -----------------------------------------
+// Render Status Chart
+// -----------------------------------------
+
+renderApplicationStatusChart();
