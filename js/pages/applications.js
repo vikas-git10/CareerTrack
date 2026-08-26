@@ -83,19 +83,152 @@ const applicationModalLabel =
 const applicationSubmitBtn =
     document.getElementById("applicationSubmitBtn");
 
+const applicationSearch =
+    document.getElementById("applicationSearch");
+
+const statusFilter =
+    document.getElementById("statusFilter");
+
+const priorityFilter =
+    document.getElementById("priorityFilter");
+
+const clearFiltersBtn =
+    document.getElementById("clearFiltersBtn");
+
+const totalApplicationsCount =
+    document.getElementById(
+        "totalApplicationsCount"
+    );
+
+const appliedApplicationsCount =
+    document.getElementById(
+        "appliedApplicationsCount"
+    );
+
+const interviewApplicationsCount =
+    document.getElementById(
+        "interviewApplicationsCount"
+    );
+
+const offerApplicationsCount =
+    document.getElementById(
+        "offerApplicationsCount"
+    );
+
+
 // -----------------------------------------
 // Render Applications
 // -----------------------------------------
 
 function renderApplications() {
 
+    const searchTerm =
+        applicationSearch.value
+            .trim()
+            .toLowerCase();
+
+    const selectedStatus =
+        statusFilter.value;
+
+    const selectedPriority =
+        priorityFilter.value;
+
+
+    // -----------------------------------------
+    // Filter applications
+    // -----------------------------------------
+
+    const filteredApplications =
+        applications.filter(application => {
+
+            const matchesSearch =
+                application.company
+                    .toLowerCase()
+                    .includes(searchTerm)
+                ||
+                application.position
+                    .toLowerCase()
+                    .includes(searchTerm);
+
+
+            const matchesStatus =
+                selectedStatus === ""
+                ||
+                application.status === selectedStatus;
+
+
+            const matchesPriority =
+                selectedPriority === ""
+                ||
+                application.priority === selectedPriority;
+
+
+            return (
+                matchesSearch &&
+                matchesStatus &&
+                matchesPriority
+            );
+
+        });
+
+
+    // -----------------------------------------
+    // Clear existing table
+    // -----------------------------------------
+
     applicationsTableBody.innerHTML = "";
 
-    applications.forEach(application => {
 
-        const row = document.createElement("tr");
+    // -----------------------------------------
+    // Empty state
+    // -----------------------------------------
+
+    if (filteredApplications.length === 0) {
+
+        applicationsTableBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="text-center py-5"
+                >
+
+                    <div class="text-muted">
+
+                        <div class="mb-2">
+                            No applications found.
+                        </div>
+
+                        <small>
+                            Try changing your search or filters.
+                        </small>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    // -----------------------------------------
+    // Render filtered applications
+    // -----------------------------------------
+
+    filteredApplications.forEach(application => {
+
+        const row =
+            document.createElement("tr");
+
 
         row.innerHTML = `
+
             <td class="company-name">
                 ${application.company}
             </td>
@@ -144,14 +277,111 @@ function renderApplications() {
                 </button>
 
             </td>
+
         `;
+
 
         applicationsTableBody.appendChild(row);
 
     });
 
+    updateStatistics();
+
 }
 
+// -----------------------------------------
+// Update Application Statistics
+// -----------------------------------------
+
+function updateStatistics() {
+
+    const total =
+        applications.length;
+
+
+    const applied =
+        applications.filter(
+            application =>
+                application.status === "Applied"
+        ).length;
+
+
+    const interviews =
+        applications.filter(
+            application =>
+                application.status === "Interview"
+                ||
+                application.status === "Technical Round"
+        ).length;
+
+
+    const offers =
+        applications.filter(
+            application =>
+                application.status === "Offer"
+        ).length;
+
+
+    totalApplicationsCount.textContent =
+        total;
+
+    appliedApplicationsCount.textContent =
+        applied;
+
+    interviewApplicationsCount.textContent =
+        interviews;
+
+    offerApplicationsCount.textContent =
+        offers;
+
+}
+
+
+// -----------------------------------------
+// Search Applications
+// -----------------------------------------
+
+applicationSearch.addEventListener(
+    "input",
+    renderApplications
+);
+
+// -----------------------------------------
+// Status Filter
+// -----------------------------------------
+
+statusFilter.addEventListener(
+    "change",
+    renderApplications
+);
+
+// -----------------------------------------
+// Priority Filter
+// -----------------------------------------
+
+priorityFilter.addEventListener(
+    "change",
+    renderApplications
+);
+
+// -----------------------------------------
+// Clear Filters
+// -----------------------------------------
+
+clearFiltersBtn.addEventListener(
+    "click",
+    function() {
+
+        applicationSearch.value = "";
+
+        statusFilter.value = "";
+
+        priorityFilter.value = "";
+
+        renderApplications();
+
+    }
+);
 
 // -----------------------------------------
 // Format Date
