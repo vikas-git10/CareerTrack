@@ -278,3 +278,188 @@ function getStatusBadge(status) {
 updateDashboardStatistics();
 
 renderRecentApplications();
+
+// -----------------------------------------
+// Application Analytics Chart
+// -----------------------------------------
+
+function renderApplicationChart() {
+
+    const canvas =
+        document.getElementById(
+            "applicationChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    // -----------------------------------------
+    // Prepare last 6 months
+    // -----------------------------------------
+
+    const now =
+        new Date();
+
+
+    const months = [];
+
+
+    for (let i = 5; i >= 0; i--) {
+
+        const date =
+            new Date(
+                now.getFullYear(),
+                now.getMonth() - i,
+                1
+            );
+
+
+        months.push({
+
+            month:
+                date.toLocaleString(
+                    "en-IN",
+                    {
+                        month: "short"
+                    }
+                ),
+
+            monthNumber:
+                date.getMonth(),
+
+            year:
+                date.getFullYear(),
+
+            count: 0
+
+        });
+
+    }
+
+
+    // -----------------------------------------
+    // Count applications
+    // -----------------------------------------
+
+    applications.forEach(
+        application => {
+
+            if (!application.appliedDate) {
+                return;
+            }
+
+
+            const date =
+                new Date(
+                    application.appliedDate
+                );
+
+
+            const matchingMonth =
+                months.find(
+                    item =>
+                        item.monthNumber ===
+                        date.getMonth()
+                        &&
+                        item.year ===
+                        date.getFullYear()
+                );
+
+
+            if (matchingMonth) {
+
+                matchingMonth.count++;
+
+            }
+
+        }
+    );
+
+
+    // -----------------------------------------
+    // Create chart
+    // -----------------------------------------
+
+    new Chart(
+        canvas,
+        {
+
+            type: "line",
+
+            data: {
+
+                labels:
+                    months.map(
+                        item => item.month
+                    ),
+
+                datasets: [
+
+                    {
+
+                        label:
+                            "Applications",
+
+                        data:
+                            months.map(
+                                item => item.count
+                            ),
+
+                        tension: 0.3,
+
+                        fill: true
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            precision: 0
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// -----------------------------------------
+// Render Chart
+// -----------------------------------------
+
+renderApplicationChart();
