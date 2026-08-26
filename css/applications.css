@@ -173,3 +173,39 @@
 .job-url:hover {
     text-decoration: underline;
 }
+
+/* =========================================
+   Required Skills Input
+   ========================================= */
+
+.selected-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.selected-skill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #eef2ff;
+    color: var(--primary-dark);
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.remove-skill-btn {
+    border: none;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.remove-skill-btn:hover {
+    opacity: 0.7;
+}

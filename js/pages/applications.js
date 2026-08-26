@@ -3,6 +3,8 @@
 // =========================================
 
 let editingApplicationId = null;
+
+let selectedSkills = [];
 // -----------------------------------------
 // Application Data
 // -----------------------------------------
@@ -158,6 +160,17 @@ const detailsSkills =
 const detailsEditBtn =
     document.getElementById("detailsEditBtn");
 
+const skillInput =
+    document.getElementById("skillInput");
+
+const addSkillBtn =
+    document.getElementById("addSkillBtn");
+
+const selectedSkillsContainer =
+    document.getElementById("selectedSkills");
+
+const addApplicationBtn =
+    document.getElementById("addApplicationBtn");
 
 // -----------------------------------------
 // Render Applications
@@ -564,6 +577,158 @@ function renderDetailsSkills(skills) {
 
 }
 
+// -----------------------------------------
+// Render Selected Skills in Form
+// -----------------------------------------
+
+function renderSelectedSkills() {
+
+    selectedSkillsContainer.innerHTML = "";
+
+
+    selectedSkills.forEach((skill, index) => {
+
+        const skillTag =
+            document.createElement("span");
+
+        skillTag.className =
+            "selected-skill";
+
+
+        skillTag.innerHTML = `
+
+            ${skill}
+
+            <button
+                type="button"
+                class="remove-skill-btn"
+                onclick="removeSkill(${index})"
+                aria-label="Remove ${skill}"
+            >
+                ×
+            </button>
+
+        `;
+
+
+        selectedSkillsContainer.appendChild(
+            skillTag
+        );
+
+    });
+
+}
+
+// -----------------------------------------
+// Add Required Skill
+// -----------------------------------------
+
+function addSkill() {
+
+    const skill =
+        skillInput.value.trim();
+
+
+    if (!skill) {
+        return;
+    }
+
+
+    // Prevent duplicate skills
+
+    const alreadyExists =
+        selectedSkills.some(
+            existingSkill =>
+                existingSkill.toLowerCase() ===
+                skill.toLowerCase()
+        );
+
+
+    if (alreadyExists) {
+
+        skillInput.value = "";
+
+        return;
+
+    }
+
+
+    selectedSkills.push(skill);
+
+    skillInput.value = "";
+
+    renderSelectedSkills();
+
+    skillInput.focus();
+
+}
+
+// -----------------------------------------
+// Remove Required Skill
+// -----------------------------------------
+
+function removeSkill(index) {
+
+    selectedSkills.splice(index, 1);
+
+    renderSelectedSkills();
+
+}
+
+// -----------------------------------------
+// Add Skill Button
+// -----------------------------------------
+
+addSkillBtn.addEventListener(
+    "click",
+    addSkill
+);
+
+// -----------------------------------------
+// Reset Form When Adding New Application
+// -----------------------------------------
+
+addApplicationBtn.addEventListener(
+    "click",
+    function() {
+
+        editingApplicationId = null;
+
+        selectedSkills = [];
+
+        renderSelectedSkills();
+
+        applicationForm.reset();
+
+        applicationModalLabel.textContent =
+            "Add Job Application";
+
+        applicationSubmitBtn.textContent =
+            "Add Application";
+
+    }
+);
+
+// -----------------------------------------
+// Add Skill with Enter
+// -----------------------------------------
+
+skillInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            addSkill();
+
+        }
+
+    }
+);
+
+
 
 // -----------------------------------------
 // Add / Edit Application
@@ -608,7 +773,9 @@ applicationForm.addEventListener("submit", function(event) {
             document.getElementById("jobUrl").value.trim(),
 
         notes:
-            document.getElementById("notes").value.trim()
+            document.getElementById("notes").value.trim(),
+
+        requiredSkills: [...selectedSkills]
 
     };
 
@@ -681,6 +848,8 @@ applicationForm.addEventListener("submit", function(event) {
     // -----------------------------------------
 
     applicationForm.reset();
+    selectedSkills = [];
+    renderSelectedSkills();
 
 
     // -----------------------------------------
@@ -942,6 +1111,11 @@ function editApplication(id) {
     document.getElementById("notes").value =
         application.notes || "";
 
+    selectedSkills = [
+        ...(application.requiredSkills || [])
+    ];
+
+    renderSelectedSkills();
 
     // -----------------------------------------
     // Open modal
