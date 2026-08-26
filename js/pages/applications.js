@@ -2,7 +2,7 @@
 // CareerTrack - Applications Page
 // =========================================
 
-
+let editingApplicationId = null;
 // -----------------------------------------
 // Application Data
 // -----------------------------------------
@@ -77,6 +77,11 @@ const applicationForm =
 const applicationsTableBody =
     document.getElementById("applicationsTableBody");
 
+const applicationModalLabel =
+    document.getElementById("applicationModalLabel");
+
+const applicationSubmitBtn =
+    document.getElementById("applicationSubmitBtn");
 
 // -----------------------------------------
 // Render Applications
@@ -220,7 +225,7 @@ function getStatusBadge(status) {
 
 
 // -----------------------------------------
-// Add Application
+// Add / Edit Application
 // -----------------------------------------
 
 applicationForm.addEventListener("submit", function(event) {
@@ -228,11 +233,11 @@ applicationForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
 
-    // Create new application object
+    // -----------------------------------------
+    // Collect form data
+    // -----------------------------------------
 
-    const newApplication = {
-
-        id: Date.now(),
+    const applicationData = {
 
         company:
             document.getElementById("company").value.trim(),
@@ -268,14 +273,55 @@ applicationForm.addEventListener("submit", function(event) {
 
 
     // -----------------------------------------
-    // Save to LocalStorage
+    // EDIT MODE
     // -----------------------------------------
 
-    ApplicationService.add(newApplication);
+    if (editingApplicationId !== null) {
+
+        ApplicationService.update(
+            editingApplicationId,
+            applicationData
+        );
+
+
+        console.log(
+            "Application updated:",
+            editingApplicationId
+        );
+
+    }
 
 
     // -----------------------------------------
-    // Reload applications from LocalStorage
+    // ADD MODE
+    // -----------------------------------------
+
+    else {
+
+        const newApplication = {
+
+            id: Date.now(),
+
+            ...applicationData
+
+        };
+
+
+        ApplicationService.add(
+            newApplication
+        );
+
+
+        console.log(
+            "Application added:",
+            newApplication
+        );
+
+    }
+
+
+    // -----------------------------------------
+    // Reload applications
     // -----------------------------------------
 
     applications =
@@ -297,6 +343,24 @@ applicationForm.addEventListener("submit", function(event) {
 
 
     // -----------------------------------------
+    // Reset edit mode
+    // -----------------------------------------
+
+    editingApplicationId = null;
+
+
+    // -----------------------------------------
+    // Reset modal title/button
+    // -----------------------------------------
+
+    applicationModalLabel.textContent =
+        "Add Job Application";
+
+    applicationSubmitBtn.textContent =
+        "Add Application";
+
+
+    // -----------------------------------------
     // Close modal
     // -----------------------------------------
 
@@ -304,18 +368,13 @@ applicationForm.addEventListener("submit", function(event) {
         document.getElementById("applicationModal");
 
     const modal =
-        bootstrap.Modal.getInstance(modalElement);
+        bootstrap.Modal.getInstance(
+            modalElement
+        );
 
     modal.hide();
 
-
-    console.log(
-        "Application added:",
-        newApplication
-    );
-
 });
-
 
 // -----------------------------------------
 // View Application
@@ -338,9 +397,85 @@ function viewApplication(id) {
 function editApplication(id) {
 
     const application =
-        applications.find(app => app.id === id);
+        ApplicationService.getById(id);
 
-    console.log("Editing application:", application);
+
+    if (!application) {
+
+        console.error(
+            "Application not found:",
+            id
+        );
+
+        return;
+
+    }
+
+
+    // Store the ID of the application being edited
+
+    editingApplicationId = id;
+
+
+    // -----------------------------------------
+    // Change modal title and button
+    // -----------------------------------------
+
+    applicationModalLabel.textContent =
+        "Edit Job Application";
+
+    applicationSubmitBtn.textContent =
+        "Save Changes";
+
+
+    // -----------------------------------------
+    // Populate form
+    // -----------------------------------------
+
+    document.getElementById("company").value =
+        application.company || "";
+
+    document.getElementById("position").value =
+        application.position || "";
+
+    document.getElementById("location").value =
+        application.location || "";
+
+    document.getElementById("workMode").value =
+        application.workMode || "";
+
+    document.getElementById("jobType").value =
+        application.jobType || "";
+
+    document.getElementById("status").value =
+        application.status || "";
+
+    document.getElementById("priority").value =
+        application.priority || "";
+
+    document.getElementById("appliedDate").value =
+        application.appliedDate || "";
+
+    document.getElementById("jobUrl").value =
+        application.jobUrl || "";
+
+    document.getElementById("notes").value =
+        application.notes || "";
+
+
+    // -----------------------------------------
+    // Open modal
+    // -----------------------------------------
+
+    const modalElement =
+        document.getElementById("applicationModal");
+
+    const modal =
+        bootstrap.Modal.getOrCreateInstance(
+            modalElement
+        );
+
+    modal.show();
 
 }
 
