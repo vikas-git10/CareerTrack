@@ -209,3 +209,9 @@
 .remove-skill-btn:hover {
     opacity: 0.7;
 }
+.skill-required-level {
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.75;
+    padding-left: 2px;
+}

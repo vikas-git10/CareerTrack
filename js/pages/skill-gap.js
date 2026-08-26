@@ -153,93 +153,119 @@ function analyzeSkillGap() {
     // -----------------------------------------
 
     const results =
-        requiredSkills.map(requiredSkill => {
+    requiredSkills.map(requiredSkill => {
 
-            const userSkill =
-                skills.find(
-                    skill =>
-                        skill.name.toLowerCase() ===
-                        requiredSkill.toLowerCase()
-                );
+        // -----------------------------------------
+        // Support both old and new formats
+        // -----------------------------------------
 
-
-            // -----------------------------------------
-            // Missing skill
-            // -----------------------------------------
-
-            if (!userSkill) {
-
-                return {
-
-                    skill: requiredSkill,
-
-                    requiredLevel: "Not specified",
-
-                    currentLevel: "Missing",
-
-                    status: "missing",
-
-                    gap: null
-
-                };
-
-            }
+        const requiredSkillName =
+            typeof requiredSkill === "object"
+                ? requiredSkill.name
+                : requiredSkill;
 
 
-            const requiredLevel =
-                getRequiredLevel(requiredSkill);
+        const requiredLevel =
+            typeof requiredSkill === "object"
+                ? requiredSkill.level
+                : getRequiredLevel(requiredSkill);
 
 
-            const currentValue =
-                skillLevelValues[
-                    userSkill.currentLevel
-                ] || 0;
+        // -----------------------------------------
+        // Find user's skill
+        // -----------------------------------------
+
+        const userSkill =
+            skills.find(
+                skill =>
+                    skill.name.toLowerCase() ===
+                    requiredSkillName.toLowerCase()
+            );
 
 
-            const requiredValue =
-                skillLevelValues[
-                    requiredLevel
-                ] || 0;
+        // -----------------------------------------
+        // Missing skill
+        // -----------------------------------------
 
-
-            const gap =
-                requiredValue - currentValue;
-
-
-            let status;
-
-
-            if (gap <= 0) {
-
-                status = "strong";
-
-            }
-            else {
-
-                status = "improve";
-
-            }
-
+        if (!userSkill) {
 
             return {
 
-                skill: requiredSkill,
+                skill:
+                    requiredSkillName,
 
                 requiredLevel:
                     requiredLevel,
 
                 currentLevel:
-                    userSkill.currentLevel,
+                    "Missing",
 
                 status:
-                    status,
+                    "missing",
 
                 gap:
-                    gap
+                    null
 
             };
 
-        });
+        }
+
+
+        // -----------------------------------------
+        // Compare proficiency
+        // -----------------------------------------
+
+        const currentValue =
+            skillLevelValues[
+                userSkill.currentLevel
+            ] || 0;
+
+
+        const requiredValue =
+            skillLevelValues[
+                requiredLevel
+            ] || 1;
+
+
+        const gap =
+            requiredValue - currentValue;
+
+
+        let status;
+
+
+        if (gap <= 0) {
+
+            status = "strong";
+
+        }
+        else {
+
+            status = "improve";
+
+        }
+
+
+        return {
+
+            skill:
+                requiredSkillName,
+
+            requiredLevel:
+                requiredLevel,
+
+            currentLevel:
+                userSkill.currentLevel,
+
+            status:
+                status,
+
+            gap:
+                gap
+
+        };
+
+    });
 
 
     renderAnalysis(

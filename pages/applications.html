@@ -875,33 +875,83 @@
 
                         </div>
 
-                        <!-- REQUIRED SKILLS -->
+ <!-- REQUIRED SKILLS -->
 
 <div class="col-12">
 
-    <label
-        for="skillInput"
-        class="form-label"
-    >
+    <label class="form-label">
         Required Skills
     </label>
 
-    <div class="input-group">
 
-        <input
-            type="text"
-            class="form-control"
-            id="skillInput"
-            placeholder="e.g. JavaScript"
-        >
+    <div class="row g-2">
 
-        <button
-            type="button"
-            class="btn btn-outline-primary"
-            id="addSkillBtn"
-        >
-            Add Skill
-        </button>
+
+        <!-- Skill Name -->
+
+        <div class="col-md-6">
+
+            <input
+                type="text"
+                class="form-control"
+                id="skillInput"
+                placeholder="e.g. JavaScript"
+            >
+
+        </div>
+
+
+        <!-- Required Level -->
+
+        <div class="col-md-4">
+
+            <select
+                class="form-select"
+                id="skillLevelInput"
+            >
+
+                <option value="">
+                    Required Level
+                </option>
+
+                <option value="Beginner">
+                    Beginner
+                </option>
+
+                <option value="Basic">
+                    Basic
+                </option>
+
+                <option value="Intermediate">
+                    Intermediate
+                </option>
+
+                <option value="Advanced">
+                    Advanced
+                </option>
+
+                <option value="Expert">
+                    Expert
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Add -->
+
+        <div class="col-md-2">
+
+            <button
+                type="button"
+                class="btn btn-outline-primary w-100"
+                id="addSkillBtn"
+            >
+                Add
+            </button>
+
+        </div>
 
     </div>
 

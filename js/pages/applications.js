@@ -163,6 +163,9 @@ const detailsEditBtn =
 const skillInput =
     document.getElementById("skillInput");
 
+const skillLevelInput =
+    document.getElementById("skillLevelInput");
+
 const addSkillBtn =
     document.getElementById("addSkillBtn");
 
@@ -567,13 +570,45 @@ function renderDetailsSkills(skills) {
 
 
     detailsSkills.innerHTML =
-        skills.map(skill => `
+        skills.map(skill => {
 
-            <span class="skill-tag">
-                ${skill}
-            </span>
+            // New format:
+            // { name: "JavaScript", level: "Advanced" }
 
-        `).join("");
+            if (
+                typeof skill === "object" &&
+                skill !== null
+            ) {
+
+                return `
+
+                    <span class="skill-tag">
+
+                        ${skill.name}
+
+                        <span class="skill-required-level">
+                            ${skill.level}
+                        </span>
+
+                    </span>
+
+                `;
+
+            }
+
+
+            // Old format:
+            // "JavaScript"
+
+            return `
+
+                <span class="skill-tag">
+                    ${skill}
+                </span>
+
+            `;
+
+        }).join("");
 
 }
 
@@ -586,36 +621,43 @@ function renderSelectedSkills() {
     selectedSkillsContainer.innerHTML = "";
 
 
-    selectedSkills.forEach((skill, index) => {
+    selectedSkills.forEach(
+        (skill, index) => {
 
-        const skillTag =
-            document.createElement("span");
-
-        skillTag.className =
-            "selected-skill";
+            const skillTag =
+                document.createElement("span");
 
 
-        skillTag.innerHTML = `
-
-            ${skill}
-
-            <button
-                type="button"
-                class="remove-skill-btn"
-                onclick="removeSkill(${index})"
-                aria-label="Remove ${skill}"
-            >
-                ×
-            </button>
-
-        `;
+            skillTag.className =
+                "selected-skill";
 
 
-        selectedSkillsContainer.appendChild(
-            skillTag
-        );
+            skillTag.innerHTML = `
 
-    });
+                ${skill.name}
+
+                <span class="skill-required-level">
+                    ${skill.level}
+                </span>
+
+                <button
+                    type="button"
+                    class="remove-skill-btn"
+                    onclick="removeSkill(${index})"
+                    aria-label="Remove ${skill.name}"
+                >
+                    ×
+                </button>
+
+            `;
+
+
+            selectedSkillsContainer.appendChild(
+                skillTag
+            );
+
+        }
+    );
 
 }
 
@@ -628,34 +670,70 @@ function addSkill() {
     const skill =
         skillInput.value.trim();
 
+    const level =
+        skillLevelInput.value;
+
 
     if (!skill) {
         return;
     }
 
 
-    // Prevent duplicate skills
+    if (!level) {
 
-    const alreadyExists =
-        selectedSkills.some(
-            existingSkill =>
-                existingSkill.toLowerCase() ===
-                skill.toLowerCase()
+        alert(
+            "Please select the required skill level."
         );
-
-
-    if (alreadyExists) {
-
-        skillInput.value = "";
 
         return;
 
     }
 
 
-    selectedSkills.push(skill);
+    // -----------------------------------------
+    // Prevent duplicate skills
+    // -----------------------------------------
+
+    const alreadyExists =
+        selectedSkills.some(
+            existingSkill =>
+                existingSkill.name.toLowerCase() ===
+                skill.toLowerCase()
+        );
+
+
+    if (alreadyExists) {
+
+        alert(
+            "This skill has already been added."
+        );
+
+        return;
+
+    }
+
+
+    // -----------------------------------------
+    // Add skill object
+    // -----------------------------------------
+
+    selectedSkills.push({
+
+        name: skill,
+
+        level: level
+
+    });
+
+
+    // -----------------------------------------
+    // Reset inputs
+    // -----------------------------------------
 
     skillInput.value = "";
+
+    skillLevelInput.value = "";
+
 
     renderSelectedSkills();
 
