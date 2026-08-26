@@ -131,6 +131,13 @@ function renderApplications() {
                     Edit
                 </button>
 
+                <button
+                    class="btn btn-sm btn-outline-danger"
+                    onclick="deleteApplication(${application.id})"
+                >
+                    Delete
+                </button>
+
             </td>
         `;
 
@@ -337,6 +344,62 @@ function editApplication(id) {
 
 }
 
+// -----------------------------------------
+// Delete Application
+// -----------------------------------------
+
+function deleteApplication(id) {
+
+    const application =
+        ApplicationService.getById(id);
+
+
+    if (!application) {
+
+        console.error(
+            "Application not found:",
+            id
+        );
+
+        return;
+
+    }
+
+
+    // Ask for confirmation
+
+    const confirmed = confirm(
+        `Are you sure you want to delete the application for ${application.company}?`
+    );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    // Delete from LocalStorage
+
+    ApplicationService.delete(id);
+
+
+    // Reload applications
+
+    applications =
+        ApplicationService.getAll();
+
+
+    // Update table
+
+    renderApplications();
+
+
+    console.log(
+        "Application deleted:",
+        application
+    );
+
+}
 
 // -----------------------------------------
 // Initial Render
