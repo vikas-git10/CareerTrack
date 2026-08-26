@@ -43,6 +43,31 @@ const recentApplicationsBody =
         "recentApplicationsBody"
     );
 
+const dashboardTotalSkills =
+    document.getElementById(
+        "dashboardTotalSkills"
+    );
+
+const dashboardAdvancedSkills =
+    document.getElementById(
+        "dashboardAdvancedSkills"
+    );
+
+const dashboardIntermediateSkills =
+    document.getElementById(
+        "dashboardIntermediateSkills"
+    );
+
+const dashboardBeginnerSkills =
+    document.getElementById(
+        "dashboardBeginnerSkills"
+    );
+
+const dashboardTopSkills =
+    document.getElementById(
+        "dashboardTopSkills"
+    );
+
 
 // -----------------------------------------
 // Update Statistics
@@ -98,6 +123,165 @@ function updateDashboardStatistics() {
 
     dashboardOffers.textContent =
         offerCount;
+
+}
+
+// -----------------------------------------
+// Update Skills Overview
+// -----------------------------------------
+
+function updateSkillsOverview() {
+
+    // -----------------------------------------
+    // Total Skills
+    // -----------------------------------------
+
+    dashboardTotalSkills.textContent =
+        skills.length;
+
+
+    // -----------------------------------------
+    // Skill Levels
+    // -----------------------------------------
+
+    const advancedCount =
+        skills.filter(
+            skill =>
+                skill.currentLevel === "Advanced"
+                ||
+                skill.currentLevel === "Expert"
+        ).length;
+
+
+    const intermediateCount =
+        skills.filter(
+            skill =>
+                skill.currentLevel === "Intermediate"
+        ).length;
+
+
+    const beginnerCount =
+        skills.filter(
+            skill =>
+                skill.currentLevel === "Beginner"
+        ).length;
+
+
+    dashboardAdvancedSkills.textContent =
+        advancedCount;
+
+
+    dashboardIntermediateSkills.textContent =
+        intermediateCount;
+
+
+    dashboardBeginnerSkills.textContent =
+        beginnerCount;
+
+
+    // -----------------------------------------
+    // Render Top Skills
+    // -----------------------------------------
+
+    renderDashboardTopSkills();
+
+}
+
+// -----------------------------------------
+// Render Top Skills
+// -----------------------------------------
+
+function renderDashboardTopSkills() {
+
+    dashboardTopSkills.innerHTML = "";
+
+
+    if (skills.length === 0) {
+
+        dashboardTopSkills.innerHTML = `
+
+            <div class="text-muted py-3">
+
+                No skills added yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const levelValues = {
+
+        Beginner: 1,
+
+        Basic: 2,
+
+        Intermediate: 3,
+
+        Advanced: 4,
+
+        Expert: 5
+
+    };
+
+
+    const topSkills =
+        [...skills]
+            .sort(
+                (a, b) =>
+                    (
+                        levelValues[b.currentLevel] || 0
+                    )
+                    -
+                    (
+                        levelValues[a.currentLevel] || 0
+                    )
+            )
+            .slice(0, 5);
+
+
+    topSkills.forEach(skill => {
+
+        const item =
+            document.createElement("div");
+
+
+        item.className =
+            "dashboard-skill-item";
+
+
+        item.innerHTML = `
+
+            <div>
+
+                <div class="dashboard-skill-name">
+                    ${skill.name}
+                </div>
+
+                <div class="dashboard-skill-category">
+                    ${skill.category}
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-skill-level">
+
+                ${skill.currentLevel}
+
+            </div>
+
+        `;
+
+
+        dashboardTopSkills.appendChild(
+            item
+        );
+
+    });
 
 }
 
@@ -588,3 +772,5 @@ function renderApplicationStatusChart() {
 // -----------------------------------------
 
 renderApplicationStatusChart();
+
+updateSkillsOverview();
