@@ -1,0 +1,90 @@
+/* =========================================
+   CareerTrack - Profile
+   ========================================= */
+
+
+.profile-summary-panel {
+    text-align: center;
+}
+
+
+.profile-summary-avatar {
+    width: 82px;
+    height: 82px;
+
+    margin: 10px auto 18px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef2ff;
+
+    color: #4338ca;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+.profile-summary-name {
+    font-size: 22px;
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+
+.profile-summary-role {
+    color: #64748b;
+
+    margin-bottom: 25px;
+}
+
+
+.profile-summary-details {
+    text-align: left;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.profile-summary-item {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.profile-summary-item span {
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+.profile-summary-item strong {
+    font-size: 13px;
+
+    text-align: right;
+
+    word-break: break-word;
+}
+
+
+.profile-save-message {
+    margin-left: 12px;
+
+    font-size: 13px;
+
+    color: #16a34a;
+}
