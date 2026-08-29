@@ -1,0 +1,181 @@
+/* =========================================
+   CareerTrack - Settings
+   ========================================= */
+
+
+.settings-container {
+    max-width: 900px;
+}
+
+
+.settings-panel {
+    margin-bottom: 18px;
+}
+
+
+.settings-panel-header {
+    margin-bottom: 20px;
+}
+
+
+.settings-description {
+    margin-top: 5px;
+
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+
+.settings-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.settings-label {
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.settings-help {
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    color: #64748b;
+}
+
+
+.settings-select {
+    max-width: 180px;
+}
+
+
+.settings-data-actions {
+    display: flex;
+
+    gap: 10px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.settings-message {
+    margin-top: 14px;
+
+    font-size: 13px;
+
+    color: #16a34a;
+}
+
+
+@media (max-width: 600px) {
+
+    .settings-row {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .settings-select {
+        max-width: 100%;
+    }
+
+
+    .settings-data-actions {
+        flex-direction: column;
+    }
+
+}
+
+/* =========================================
+   Dark Mode
+   ========================================= */
+
+body.dark-mode {
+    background: #111827;
+    color: #f1f5f9;
+}
+
+
+body.dark-mode .main-content {
+    background: #111827;
+}
+
+
+body.dark-mode .topbar {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+body.dark-mode .dashboard-panel {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+body.dark-mode .page-heading p {
+    color: #94a3b8;
+}
+
+
+body.dark-mode .settings-description,
+body.dark-mode .settings-help {
+    color: #94a3b8;
+}
+
+
+body.dark-mode .settings-row {
+    border-color: #374151;
+}
+
+
+body.dark-mode .settings-summary,
+body.dark-mode .settings-label {
+    color: #f1f5f9;
+}
+
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background: #111827;
+    color: #f1f5f9;
+    border-color: #4b5563;
+}
+
+
+body.dark-mode .form-control::placeholder {
+    color: #94a3b8;
+}
+
+
+body.dark-mode .search-box {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+body.dark-mode .search-box input {
+    background: transparent;
+    color: #f1f5f9;
+}
+
+
+body.dark-mode .search-box input::placeholder {
+    color: #94a3b8;
+}
