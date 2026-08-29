@@ -28,7 +28,6 @@
         href="../css/style.css"
     >
 
-
     <!-- Dashboard CSS -->
 
     <link
@@ -44,6 +43,8 @@
         href="../css/settings.css"
     >
 
+    <link rel="stylesheet" href="../css/theme.css">
+
 </head>
 
 
@@ -53,132 +54,130 @@
 <div class="app-layout">
 
 
-    <!-- =========================================
-         SIDEBAR
-         ========================================= -->
+    <!-- =========================
+     SIDEBAR
+     ========================= -->
 
-    <aside class="sidebar">
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            C
+        </div>
+
+        <div class="brand-name">
+            CareerTrack
+        </div>
+
+    </div>
 
 
-        <div class="brand">
+    <!-- MAIN -->
 
-            <div class="brand-logo">
-                C
-            </div>
+    <div class="sidebar-section">
 
-            <div class="brand-name">
-                CareerTrack
-            </div>
-
+        <div class="sidebar-label">
+            Main
         </div>
 
 
-        <!-- MAIN -->
-
-        <div class="sidebar-section">
-
-            <div class="sidebar-label">
-                Main
-            </div>
-
-
-            <a
-                href="../index.html"
-                class="sidebar-link"
-            >
-                <span class="sidebar-icon">▦</span>
-                <span>Dashboard</span>
-            </a>
+        <a
+            href="../index.html"
+            class="sidebar-link"
+        >
+            <span class="sidebar-icon">▦</span>
+            <span>Dashboard</span>
+        </a>
 
 
-            <a
-                href="applications.html"
-                class="sidebar-link"
-            >
-                <span class="sidebar-icon">▤</span>
-                <span>Applications</span>
-            </a>
+        <a
+            href="applications.html"
+            class="sidebar-link"
+        >
+            <span class="sidebar-icon">▤</span>
+            <span>Applications</span>
+        </a>
 
 
-            <a
-                href="skills.html"
-                class="sidebar-link"
-            >
-                <span class="sidebar-icon">◆</span>
-                <span>Skills</span>
-            </a>
+        <a
+            href="skills.html"
+            class="sidebar-link"
+        >
+            <span class="sidebar-icon">◆</span>
+            <span>Skills</span>
+        </a>
 
 
-            <a
-                href="skill-gap.html"
-                class="sidebar-link"
-            >
-                <span class="sidebar-icon">◈</span>
-                <span>Skill Gap</span>
-            </a>
+        <a
+            href="skill-gap.html"
+            class="sidebar-link"
+        >
+            <span class="sidebar-icon">◈</span>
+            <span>Skill Gap</span>
+        </a>
 
 
-            <a
-                href="interviews.html"
-                class="sidebar-link"
-            >
-                <span class="sidebar-icon">◷</span>
-                <span>Interviews</span>
-            </a>
+        <a
+            href="interviews.html"
+            class="sidebar-link"
+        >
+            <span class="sidebar-icon">◷</span>
+            <span>Interviews</span>
+        </a>
 
+    </div>
+
+
+    <!-- INSIGHTS -->
+
+    <div class="sidebar-section">
+
+        <div class="sidebar-label">
+            Insights
         </div>
 
 
-        <!-- INSIGHTS -->
+        <a
+            href="analytics.html"
+            class="sidebar-link"
+        >
+            <span class="sidebar-icon">◒</span>
+            <span>Analytics</span>
+        </a>
 
-        <div class="sidebar-section">
-
-            <div class="sidebar-label">
-                Insights
-            </div>
+    </div>
 
 
-            <a
-                href="analytics.html"
-                class="sidebar-link"
-            >
-                <span class="sidebar-icon">◒</span>
-                <span>Analytics</span>
-            </a>
+    <!-- ACCOUNT -->
 
+    <div class="sidebar-section">
+
+        <div class="sidebar-label">
+            Account
         </div>
 
 
-        <!-- ACCOUNT -->
-
-        <div class="sidebar-section">
-
-            <div class="sidebar-label">
-                Account
-            </div>
-
-
-            <a
-                href="profile.html"
-                class="sidebar-link"
-            >
-                <span class="sidebar-icon">●</span>
-                <span>Profile</span>
-            </a>
+        <a
+            href="profile.html"
+            class="sidebar-link"
+        >
+            <span class="sidebar-icon">●</span>
+            <span>Profile</span>
+        </a>
 
 
-            <a
-                href="settings.html"
-                class="sidebar-link active"
-            >
-                <span class="sidebar-icon">⚙</span>
-                <span>Settings</span>
-            </a>
+        <a
+            href="settings.html"
+            class="sidebar-link active"
+        >
+            <span class="sidebar-icon">⚙</span>
+            <span>Settings</span>
+        </a>
 
-        </div>
+    </div>
 
-
-    </aside>
+</aside>
 
 
     <!-- =========================================
@@ -460,7 +459,7 @@
 <script
     src="../js/pages/settings.js"
 ></script>
-
+<script src="../js/theme.js"></script>
 
 </body>
 

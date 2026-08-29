@@ -1,0 +1,212 @@
+/* =========================================
+   CareerTrack - Global Dark Mode
+   ========================================= */
+
+body.dark-mode {
+    background: #111827;
+    color: #f1f5f9;
+}
+
+
+/* Main content */
+
+body.dark-mode .main-content {
+    background: #111827;
+}
+
+
+/* Topbar */
+
+body.dark-mode .topbar {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+body.dark-mode .search-box {
+    background: #111827;
+    border-color: #374151;
+}
+
+
+body.dark-mode .search-box input {
+    background: transparent;
+    color: #f1f5f9;
+}
+
+
+body.dark-mode .search-box input::placeholder {
+    color: #94a3b8;
+}
+
+
+/* Headings */
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: #f1f5f9;
+}
+
+
+body.dark-mode p {
+    color: #94a3b8;
+}
+
+
+/* Panels */
+
+body.dark-mode .dashboard-panel,
+body.dark-mode .stat-card {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+/* Form controls */
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background: #111827;
+    color: #f1f5f9;
+    border-color: #4b5563;
+}
+
+
+body.dark-mode .form-control::placeholder {
+    color: #94a3b8;
+}
+
+
+/* Labels */
+
+body.dark-mode .form-label,
+body.dark-mode .stat-title,
+body.dark-mode .panel-title {
+    color: #f1f5f9;
+}
+
+
+/* Tables */
+
+body.dark-mode table {
+    color: #f1f5f9;
+}
+
+
+body.dark-mode .table {
+    --bs-table-bg: #1f2937;
+    --bs-table-color: #f1f5f9;
+    --bs-table-border-color: #374151;
+}
+
+
+/* Cards */
+
+body.dark-mode .card {
+    background: #1f2937;
+    border-color: #374151;
+    color: #f1f5f9;
+}
+
+
+/* Interview cards */
+
+body.dark-mode .interview-card {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+body.dark-mode .interview-meta-item {
+    background: #111827;
+    border-color: #374151;
+    color: #f1f5f9;
+}
+
+
+/* Skills */
+
+body.dark-mode .skill-card,
+body.dark-mode .skill-item {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+/* Skill gap */
+
+body.dark-mode .skill-gap-card,
+body.dark-mode .gap-card {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+/* Analytics */
+
+body.dark-mode .analytics-skill-item {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+
+body.dark-mode .analytics-insight {
+    background: #111827;
+    border-color: #374151;
+}
+
+
+/* Profile */
+
+body.dark-mode .profile-summary-item {
+    border-color: #374151;
+}
+
+
+/* Settings */
+
+body.dark-mode .settings-row {
+    border-color: #374151;
+}
+
+
+body.dark-mode .settings-description,
+body.dark-mode .settings-help {
+    color: #94a3b8;
+}
+
+
+/* Modal */
+
+body.dark-mode .modal-content {
+    background: #1f2937;
+    color: #f1f5f9;
+    border-color: #374151;
+}
+
+
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+    border-color: #374151;
+}
+
+
+/* Empty states */
+
+body.dark-mode .empty-state,
+body.dark-mode .interview-empty {
+    background: #1f2937;
+    border-color: #374151;
+    color: #94a3b8;
+}
+
+
+/* Links */
+
+body.dark-mode a {
+    color: #a5b4fc;
+}

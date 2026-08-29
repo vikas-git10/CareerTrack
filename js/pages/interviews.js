@@ -10,6 +10,8 @@
 let interviews =
     getAllInterviews();
 
+let applications =
+    ApplicationService.getAll();
 
 // -----------------------------------------
 // DOM Elements
@@ -79,6 +81,12 @@ const interviewId =
         "interviewId"
     );
 
+const interviewApplication =
+    document.getElementById(
+        "interviewApplication"
+    );
+
+
 const interviewCompany =
     document.getElementById(
         "interviewCompany"
@@ -124,6 +132,83 @@ const interviewNotes =
         "interviewNotes"
     );
 
+// -----------------------------------------
+// Populate Application Dropdown
+// -----------------------------------------
+
+function populateApplicationDropdown() {
+
+    interviewApplication.innerHTML = `
+        <option value="">
+            Select an application
+        </option>
+    `;
+
+
+    applications.forEach(
+        application => {
+
+            const option =
+                document.createElement("option");
+
+
+            option.value =
+                application.id;
+
+
+            option.textContent =
+                `${application.company} — ${application.position}`;
+
+
+            interviewApplication.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+// -----------------------------------------
+// Application Selection
+// -----------------------------------------
+
+interviewApplication.addEventListener(
+    "change",
+    function () {
+
+        const selectedId =
+            Number(
+                this.value
+            );
+
+
+        const application =
+            applications.find(
+                app =>
+                    app.id === selectedId
+            );
+
+
+        if (!application) {
+
+            interviewCompany.value = "";
+            interviewPosition.value = "";
+
+            return;
+
+        }
+
+
+        interviewCompany.value =
+            application.company;
+
+
+        interviewPosition.value =
+            application.position;
+
+    }
+);
 
 // -----------------------------------------
 // Reset Form
@@ -134,6 +219,12 @@ function resetInterviewForm() {
     interviewForm.reset();
 
     interviewId.value = "";
+
+    interviewApplication.value = "";
+
+    interviewCompany.value = "";
+
+    interviewPosition.value = "";
 
     interviewModalTitle.textContent =
         "Schedule Interview";
@@ -180,6 +271,11 @@ interviewForm.addEventListener(
 
 
         const interviewData = {
+
+            applicationId:
+                Number(
+                interviewApplication.value
+            ),
 
             company:
                 interviewCompany.value.trim(),
@@ -256,6 +352,38 @@ interviewForm.addEventListener(
         );
 
         return;
+
+    }
+
+
+    // -----------------------------------------
+    // Update Linked Application Status
+    // -----------------------------------------
+
+    const applicationId =
+        Number(
+            interviewApplication.value
+        );
+
+
+    if (applicationId) {
+
+        const application =
+            ApplicationService.getById(
+                applicationId
+            );
+
+
+        if (application) {
+
+            ApplicationService.update(
+                applicationId,
+                {
+                    status: "Interview"
+                }
+            );
+
+        }
 
     }
 
@@ -625,6 +753,9 @@ function openEditInterview(
     interviewId.value =
         interview.id;
 
+    interviewApplication.value =
+        interview.applicationId || "";
+
     interviewCompany.value =
         interview.company;
 
@@ -910,6 +1041,8 @@ interviewTypeFilter.addEventListener(
 // -----------------------------------------
 // Initial Load
 // -----------------------------------------
+
+populateApplicationDropdown();
 
 renderInterviews();
 

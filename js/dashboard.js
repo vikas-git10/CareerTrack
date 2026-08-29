@@ -110,12 +110,7 @@ function updateDashboardStatistics() {
     // Interviews
 
     const interviewCount =
-        applications.filter(
-            application =>
-                application.status === "Interview"
-                ||
-                application.status === "Technical Round"
-        ).length;
+        getAllInterviews().length;
 
 
     dashboardInterviews.textContent =
