@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Interviews | CareerTrack</title>
+
+
+    <!-- Bootstrap -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- Global CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+
+    <!-- Dashboard / Layout CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css"
+    >
+
+
+    <!-- Interviews CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/interviews.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app-layout">
+
+
+    <!-- =========================================
+         SIDEBAR
+         ========================================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                C
+            </div>
+
+            <div class="brand-name">
+                CareerTrack
+            </div>
+
+        </div>
+
+
+        <!-- MAIN -->
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-label">
+                Main
+            </div>
+
+
+            <a
+                href="../index.html"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+                    ▦
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="applications.html"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+                    ▤
+                </span>
+
+                <span>
+                    Applications
+                </span>
+
+            </a>
+
+
+            <a
+                href="skills.html"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+                    ◆
+                </span>
+
+                <span>
+                    Skills
+                </span>
+
+            </a>
+
+
+            <a
+                href="skill-gap.html"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+                    ◈
+                </span>
+
+                <span>
+                    Skill Gap
+                </span>
+
+            </a>
+
+
+            <a
+                href="interviews.html"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Interviews
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- INSIGHTS -->
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-label">
+                Insights
+            </div>
+
+
+            <a
+                href="analytics.html"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+                    ◒
+                </span>
+
+                <span>
+                    Analytics
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ACCOUNT -->
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-label">
+                Account
+            </div>
+
+
+            <a
+                href="profile.html"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+                    ●
+                </span>
+
+                <span>
+                    Profile
+                </span>
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+                    ⚙
+                </span>
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+         ========================================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    placeholder="Search..."
+                >
+
+            </div>
+
+
+            <div class="topbar-right">
+
+
+                <div class="notification">
+                    ♧
+                </div>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        VK
+                    </div>
+
+                    <div class="profile-name">
+
+                        <strong>
+                            Vikas
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =========================================
+             INTERVIEWS PAGE
+             ========================================= -->
+
+        <section class="dashboard">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-heading">
+
+
+                <div>
+
+                    <h1>
+                        Interviews
+                    </h1>
+
+                    <p>
+                        Track and prepare for your upcoming interviews.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="btn btn-primary"
+                    id="addInterviewBtn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#interviewModal"
+                >
+                    + Schedule Interview
+                </button>
+
+
+            </div>
+
+
+            <!-- =========================================
+                 INTERVIEW STATISTICS
+                 ========================================= -->
+
+            <div class="row g-3 mb-4">
+
+
+                <div class="col-12 col-md-4">
+
+                    <div class="stat-card">
+
+                        <div class="stat-title">
+                            Upcoming
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="upcomingInterviewCount"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-12 col-md-4">
+
+                    <div class="stat-card">
+
+                        <div class="stat-title">
+                            Completed
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="completedInterviewCount"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-12 col-md-4">
+
+                    <div class="stat-card">
+
+                        <div class="stat-title">
+                            Total Interviews
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="totalInterviewCount"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =========================================
+                 FILTERS
+                 ========================================= -->
+
+            <div class="dashboard-panel mb-4">
+
+
+                <div class="row g-3 align-items-end">
+
+
+                    <div class="col-12 col-md-6 col-lg-5">
+
+                        <label
+                            class="form-label"
+                            for="interviewSearch"
+                        >
+                            Search
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="interviewSearch"
+                            placeholder="Search company or position..."
+                        >
+
+                    </div>
+
+
+                    <div class="col-12 col-md-3">
+
+                        <label
+                            class="form-label"
+                            for="interviewStatusFilter"
+                        >
+                            Status
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="interviewStatusFilter"
+                        >
+
+                            <option value="">
+                                All Statuses
+                            </option>
+
+                            <option value="Scheduled">
+                                Scheduled
+                            </option>
+
+                            <option value="Completed">
+                                Completed
+                            </option>
+
+                            <option value="Cancelled">
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-12 col-md-3">
+
+                        <label
+                            class="form-label"
+                            for="interviewTypeFilter"
+                        >
+                            Type
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="interviewTypeFilter"
+                        >
+
+                            <option value="">
+                                All Types
+                            </option>
+
+                            <option value="HR">
+                                HR
+                            </option>
+
+                            <option value="Technical">
+                                Technical
+                            </option>
+
+                            <option value="Coding">
+                                Coding
+                            </option>
+
+                            <option value="Managerial">
+                                Managerial
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =========================================
+                 INTERVIEW LIST
+                 ========================================= -->
+
+            <div
+                id="interviewList"
+                class="interview-list"
+            >
+
+                <!-- JavaScript will render interviews here -->
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<!-- =========================================
+     INTERVIEW MODAL
+     ========================================= -->
+
+<div
+    class="modal fade"
+    id="interviewModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+
+                <h5
+                    class="modal-title"
+                    id="interviewModalTitle"
+                >
+                    Schedule Interview
+                </h5>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+
+            </div>
+
+
+            <form id="interviewForm">
+
+
+                <div class="modal-body">
+
+
+                    <input
+                        type="hidden"
+                        id="interviewId"
+                    >
+
+
+                    <div class="row g-3">
+
+
+                        <!-- COMPANY -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                class="form-label"
+                                for="interviewCompany"
+                            >
+                                Company
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="interviewCompany"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- POSITION -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                class="form-label"
+                                for="interviewPosition"
+                            >
+                                Position
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="interviewPosition"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- DATE -->
+
+                        <div class="col-md-4">
+
+                            <label
+                                class="form-label"
+                                for="interviewDate"
+                            >
+                                Date
+                            </label>
+
+                            <input
+                                type="date"
+                                class="form-control"
+                                id="interviewDate"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- TIME -->
+
+                        <div class="col-md-4">
+
+                            <label
+                                class="form-label"
+                                for="interviewTime"
+                            >
+                                Time
+                            </label>
+
+                            <input
+                                type="time"
+                                class="form-control"
+                                id="interviewTime"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- TYPE -->
+
+                        <div class="col-md-4">
+
+                            <label
+                                class="form-label"
+                                for="interviewType"
+                            >
+                                Interview Type
+                            </label>
+
+                            <select
+                                class="form-select"
+                                id="interviewType"
+                                required
+                            >
+
+                                <option value="HR">
+                                    HR
+                                </option>
+
+                                <option value="Technical">
+                                    Technical
+                                </option>
+
+                                <option value="Coding">
+                                    Coding
+                                </option>
+
+                                <option value="Managerial">
+                                    Managerial
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- MODE -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                class="form-label"
+                                for="interviewMode"
+                            >
+                                Mode
+                            </label>
+
+                            <select
+                                class="form-select"
+                                id="interviewMode"
+                            >
+
+                                <option value="Online">
+                                    Online
+                                </option>
+
+                                <option value="Phone">
+                                    Phone
+                                </option>
+
+                                <option value="In-person">
+                                    In-person
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                class="form-label"
+                                for="interviewStatus"
+                            >
+                                Status
+                            </label>
+
+                            <select
+                                class="form-select"
+                                id="interviewStatus"
+                            >
+
+                                <option value="Scheduled">
+                                    Scheduled
+                                </option>
+
+                                <option value="Completed">
+                                    Completed
+                                </option>
+
+                                <option value="Cancelled">
+                                    Cancelled
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- LINK / LOCATION -->
+
+                        <div class="col-12">
+
+                            <label
+                                class="form-label"
+                                for="interviewLink"
+                            >
+                                Meeting Link / Location
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="interviewLink"
+                                placeholder="https://... or office location"
+                            >
+
+                        </div>
+
+
+                        <!-- NOTES -->
+
+                        <div class="col-12">
+
+                            <label
+                                class="form-label"
+                                for="interviewNotes"
+                            >
+                                Notes
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                id="interviewNotes"
+                                rows="4"
+                                placeholder="Preparation notes, interviewer details, topics to revise..."
+                            ></textarea>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="modal-footer">
+
+
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                        data-bs-dismiss="modal"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Save Interview
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================
+     JAVASCRIPT
+     ========================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<script
+    src="../js/services/interviewService.js"
+></script>
+
+
+<script
+    src="../js/pages/interviews.js"
+></script>
+
+
+</body>
+
+</html>
