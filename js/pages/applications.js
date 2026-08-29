@@ -9,8 +9,72 @@ let selectedSkills = [];
 // Application Data
 // -----------------------------------------
 
-let applications =
-    ApplicationService.getAll();
+let applications = ApplicationService.getAll();
+
+if (applications.length === 0) {
+
+    applications = [
+
+        {
+            id: Date.now() + 1,
+            company: "Google",
+            position: "Frontend Developer",
+            location: "Bangalore",
+            workMode: "Hybrid",
+            jobType: "Full Time",
+            appliedDate: "2026-08-25",
+            priority: "High",
+            status: "Interview",
+
+             requiredSkills: [
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "Angular"
+            ]
+        },
+
+        {
+            id: Date.now() + 2,
+            company: "Microsoft",
+            position: "Web Developer",
+            location: "Hyderabad",
+            workMode: "Hybrid",
+            jobType: "Full Time",
+            appliedDate: "2026-08-23",
+            priority: "Medium",
+            status: "Applied"
+        },
+
+        {
+            id: Date.now() + 3,
+            company: "Infosys",
+            position: "Angular Developer",
+            location: "Pune",
+            workMode: "On-site",
+            jobType: "Full Time",
+            appliedDate: "2026-08-20",
+            priority: "High",
+            status: "Screening"
+        },
+
+        {
+            id: Date.now() + 4,
+            company: "TCS",
+            position: "Frontend Engineer",
+            location: "Mumbai",
+            workMode: "Hybrid",
+            jobType: "Full Time",
+            appliedDate: "2026-08-18",
+            priority: "Low",
+            status: "Offer"
+        }
+
+    ];
+
+    ApplicationService.saveAll(applications);
+
+}
 
 // -----------------------------------------
 // DOM Elements
